@@ -20,19 +20,6 @@ AYUDA = """Use: ./OUILookup --ip <IP> | --mac <IP> | --arp | [--help]
 disponibles en la tabla arp.
 --help: muestra este mensaje y termina."""
 
-# Api key
-def obtiene_api_key():
-    """
-    Obtiene la api key de un archivo json.
-    
-    Retorna:
-        Api key.
-    """
-    from json import load
-    with open("credentials.json", "r") as file:
-        data = load(file)
-    return data
-
 def valida_mac(mac: str) -> str:
     """
     Valida una dirección MAC.
@@ -63,7 +50,7 @@ def obtener_fabricante_mac(mac: str) -> str:
     from http import client
     start = time.time()
     conn = client.HTTPSConnection("api.maclookup.app")
-    conn.request("GET", "/v2/macs/" + mac + f"?apiKey={obtiene_api_key()['apiKey']}")
+    conn.request("GET", "/v2/macs/" + mac)
     response = conn.getresponse()
     end = time.time()
     time_elapsed = round((end - start)*1000, 3)
